@@ -37,7 +37,7 @@ Exploration (2026-09-27) of the live README found:
 - [ ] R4 Full check: checker GREEN, render preview via `gh api markdown`. Route: inline.
 
 ## Open decisions (owner)
-- Contact email: `criatiangarcia637@gmail.com` (CV + current README) vs `cristiangarcia637@gmail.com` (old WordPress).
+- ~~Contact email~~ RESOLVED 2026-09-27: owner confirmed `criatiangarcia637@gmail.com` (current README already correct).
 - LinkedIn slug correctness.
 - Portfolio link target until the new site is deployed.
 
