@@ -31,6 +31,7 @@ Exploration (2026-09-27) of the live README found:
 
 ## Tasks
 - [x] R1 Checker: `scripts/check-readme.sh` extracts URLs from README.md and validates status + image content type; observe RED on current README. Route: inline (1 mechanical file).
+- [ ] R1a Harden checker (from R1 4-lens review): resolve relative repo paths as local files (R3-002, blocks R2); extract outer link of `[![img](src)](href)` badges (R3-001); surface curl error cause (R4-curl-error-suppressed); images and links require final 2xx after -L (R2-image-status-contract-mismatch, R4-final-3xx-accepted); `--proto =http,https` + `--` before URL (R1-001); retry transient 000/5xx (R4-no-retry-transient); match bot-block list on host only (R2/R3-004); guard each extractor category + fixture README with expected URLs as the test (R3-003). Route: inline (checker + fixture test).
 - [ ] R2 Fix stats: replace the broken public instance with a reliable source (candidate: self-generated SVGs committed by a scheduled GitHub Action; research current action options before choosing). Route: inline or delegated depending on file count.
 - [ ] R3 Refresh content: headline "Backend Developer", about table (OMC Production, Ing. Software, Bogotá, AI/RAG), stack (add Docker/CI/CD/LangChain as in CV), projects table (add WordPress RAG as private/production entry, portfolio row → new site/repo), fix links (typing SVG host, blog→portfolio, LinkedIn pending owner). Route: inline (1 file).
 - [ ] R4 Full check: checker GREEN, render preview via `gh api markdown`. Route: inline.
@@ -42,8 +43,8 @@ Exploration (2026-09-27) of the live README found:
 
 ## Progress / Evidence
 - 2026-09-27: cloned to `/home/cristian/Dev/CristianGarcia7`, branch `feat/profile-readme-refresh` from `28c3cec`. URL probe results recorded under Problem.
-- R1 done: first run falsely passed (rg not on script PATH → 0 URLs extracted); fixed with portable grep/sed + a guard that fails on 0 URLs. RED observed: 2 FAIL (both github-readme-stats.vercel.app, 503 text/plain), 34 OK, 1 SKIP (LinkedIn). Commit: see `test(readme)` in git log.
+- R1 done: first run falsely passed (rg not on script PATH → 0 URLs extracted); fixed with portable grep/sed + a guard that fails on 0 URLs. RED observed: 2 FAIL (both github-readme-stats.vercel.app, 503 text/plain), 34 OK, 1 SKIP (LinkedIn). Commit `4168a35`. RDD: high (executable shell) → user granted 4-lens review, APPROVED with 4 WARNING / 7 SUGGESTION advisories → R1a; acknowledged (boundary → `4168a35`).
 - Engram mirror `odd/profile-readme-refresh/tasks`: PENDING (same `ambiguous_project` issue as portfolio-v2).
 
 ## Next step
-R2 (research a reliable stats source).
+R1a, then R2 (research a reliable stats source).
