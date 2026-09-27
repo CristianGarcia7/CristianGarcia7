@@ -53,8 +53,8 @@
 ## 📊 Estadísticas
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=CristianGarcia7&show_icons=true&theme=tokyonight&hide_border=true" alt="stats"/>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=CristianGarcia7&layout=compact&theme=tokyonight&hide_border=true" alt="lenguajes"/>
+  <img src="./profile/stats.svg" alt="stats"/>
+  <img src="./profile/top-langs.svg" alt="lenguajes"/>
 </p>
 
 ## 📫 Conectemos
