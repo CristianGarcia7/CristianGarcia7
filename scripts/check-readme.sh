@@ -55,7 +55,7 @@ is_local_image_ok() {
   [[ -f "$path" ]] || return 1
   if [[ "$kind" == "img" ]]; then
     local lower_raw
-    lower_raw=$(lower "$raw")
+    lower_raw=$(lower "$(local_path_of "$raw")")
     [[ "$lower_raw" =~ $image_ext_re ]] || return 1
   fi
   return 0
@@ -105,17 +105,30 @@ check_remote() {
   fi
 }
 
+# Strips a trailing ?query and #fragment so "a.svg?raw=true" and
+# "doc.md#section" resolve to the file on disk.
+local_path_of() {
+  local raw="${1%%#*}"
+  printf '%s' "${raw%%\?*}"
+}
+
+# Links may target files or directories; images must be files.
+local_target_exists() {
+  local kind="$1" path="$2"
+  if [[ "$kind" == "link" ]]; then [[ -e "$path" ]]; else [[ -f "$path" ]]; fi
+}
+
 check_local() {
   local kind="$1" raw="$2" path
-  path="$readme_dir/$raw"
-  if [[ ! -f "$path" ]]; then
+  path="$readme_dir/$(local_path_of "$raw")"
+  if ! local_target_exists "$kind" "$path"; then
     printf 'FAIL  %-5s local file not found: %s (resolved: %s)\n' "$kind" "$raw" "$path"
     failures=$((failures + 1))
     return
   fi
   if [[ "$kind" == "img" ]]; then
     local lower_raw
-    lower_raw=$(lower "$raw")
+    lower_raw=$(lower "$(local_path_of "$raw")")
     if [[ ! "$lower_raw" =~ $image_ext_re ]]; then
       printf 'FAIL  %-5s local image has unsupported extension: %s\n' "$kind" "$raw"
       failures=$((failures + 1))
@@ -141,13 +154,13 @@ classify_dry_run() {
     printf '%s-scheme-fail\t%s\n' "$kind" "$url"
     return
   fi
-  if [[ ! -f "$readme_dir/$url" ]]; then
+  if ! local_target_exists "$kind" "$readme_dir/$(local_path_of "$url")"; then
     printf '%s-local-missing\t%s\n' "$kind" "$url"
     return
   fi
   if [[ "$kind" == "img" ]]; then
     local lower_url
-    lower_url=$(lower "$url")
+    lower_url=$(lower "$(local_path_of "$url")")
     if [[ ! "$lower_url" =~ $image_ext_re ]]; then
       printf '%s-local-badext\t%s\n' "$kind" "$url"
       return
@@ -160,6 +173,16 @@ dispatch() {
   local kind="$1" url="$2"
   [[ -z "$url" ]] && return
   [[ "$url" =~ ^mailto: ]] && return
+
+  # In-page anchors (#section) point inside the README itself; nothing to fetch.
+  if [[ "$url" == \#* ]]; then
+    if (( dry_run )); then
+      printf '%s-anchor-skip\t%s\n' "$kind" "$url"
+    else
+      printf 'SKIP  %-5s in-page anchor %s\n' "$kind" "$url"
+    fi
+    return
+  fi
 
   if (( dry_run )); then
     local cls

@@ -17,3 +17,11 @@ Relative image (missing): ![missing](assets/missing.svg)
 Non-http scheme: [bad](file:///etc/hosts)
 
 LinkedIn (bot-blocked): [in](https://www.linkedin.com/in/someone)
+
+In-page anchor (skip): [toc](#fixture-readme)
+
+Relative image with query suffix: ![raw](assets/ok.svg?raw=true)
+
+Relative link with fragment: [deep](README.md#fixture-readme)
+
+Relative link to a directory: [dir](assets)

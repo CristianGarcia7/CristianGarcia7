@@ -27,9 +27,13 @@ fail=0
 expected=$(cat <<'EOF'
 img-local-missing	assets/missing.svg
 img-local-ok	assets/ok.svg
+img-local-ok	assets/ok.svg?raw=true
 img-remote	https://example.com/pic.png
 img-remote	https://example.com/pic2.png
 img-remote	https://img.shields.io/badge/-ok-green
+link-anchor-skip	#fixture-readme
+link-local-ok	README.md#fixture-readme
+link-local-ok	assets
 link-scheme-fail	file:///etc/hosts
 link-remote	https://example.com/page
 link-remote	https://example.com/page2
