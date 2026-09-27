@@ -38,7 +38,7 @@ Exploration (2026-09-27) of the live README found:
 
 ## Open decisions (owner)
 - ~~Contact email~~ RESOLVED 2026-09-27: owner confirmed `criatiangarcia637@gmail.com` (current README already correct).
-- LinkedIn slug correctness.
+- ~~LinkedIn slug~~ RESOLVED 2026-09-27: owner changed it to `https://www.linkedin.com/in/cristian-garcia-developer/` (old `...-gracia-rincon-developer` is stale) → R3 updates badge link.
 - Portfolio link target until the new site is deployed.
 
 ## Progress / Evidence
